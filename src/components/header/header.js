@@ -1,19 +1,27 @@
 import React from "react";
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-
+import "./headerStyles.css";
+import { Navbar, Nav, NavbarBrand, NavItem, NavLink } from 'reactstrap';
+import logo from '../../assets/burgerlogo.png';
 
 
 const Header = () => {
-    <div>
-        <Navbar>
-            <NavbarBrand href="/">Brand</NavbarBrand>
-            <Nav>
-                <NavItem>
-                    <NavLink href="#">Somethng</NavLink>
-                </NavItem>
-            </Nav>
-        </Navbar>
-    </div>
+    return (
+        <div className="navigation">
+            <Navbar style={{
+                backgroundColor: "#D70F64",
+                height: "70px"
+            }}>
+                <NavbarBrand href="/" className="mr-auto ml-md-5 Brand">
+                    <img src={logo} alt="Logo" width='80px' />
+                </NavbarBrand>
+                <Nav className="mr-md-5">
+                    <NavItem>
+                        <NavLink href="#" className="NavLink">Something</NavLink>
+                    </NavItem>
+                </Nav>
+            </Navbar>
+        </div>
+    )
 }
 
 export default Header;

@@ -1,11 +1,14 @@
 import React from "react";
-
+import Header from './header/header.js'
+import BurgerBuilder from "./burgerbuilder/burgerbuilder";
 
 const Main = props => {
     return (
         <div>
-            <h1> Hello </h1>
-
+            <Header />
+            <div className="container">
+                <BurgerBuilder />
+            </div>
         </div>
     )
 }
