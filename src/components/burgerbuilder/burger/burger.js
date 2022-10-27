@@ -1,9 +1,14 @@
 import React from "react";
+import Ingredient from "../ingredient/ingredient";
 
 const Burger = props => {
     return (
         <div>
-            <h3>Burger</h3>
+            <Ingredient type="bread-top" />
+            <Ingredient type="salad" />
+            <Ingredient type="cheese" />
+            <Ingredient type="meat" />
+            <Ingredient type="bread-bottom" />
         </div>
     )
 }

@@ -1,5 +1,3 @@
-
-
 .navigation {
     margin-bottom: 20px;
 }
@@ -10,13 +8,13 @@
     margin-top: -20px;
 }
 
-.NavLink {
-    text-decoration: none;
-    color: white;
-    font-size: 25px;
-    margin-top: -25px;
+.Navlink {
+    text-decoration: none !important;
+    color: white !important;
+    font-size: 25px !important;
+    margin-top: -25px !important;
 }
 
-.NavLink:hover {
-    color: wheat;
+.Navlink:hover {
+    color: wheat !important;
 }
