@@ -12,8 +12,8 @@ const BuildControl = props => {
     return (
         <div className="d-flex">
             <div className="me-auto ms-5" style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>{props.label}</div>
-            <Button color="danger" className=" btn-sm m-1">Less</Button>
-            <Button color="success" className="btn-sm m-1">More</Button>
+            <Button color="danger" className=" btn-sm m-1" onClick={props.removed}>Less</Button>
+            <Button color="success" className="btn-sm m-1" onClick={props.added}>More</Button>
         </div>
     )
 }
@@ -28,12 +28,14 @@ const Controls = props => {
                 <CardBody>
                     {
                         controls.map(item => {
-                            return <BuildControl label={item.label} type={item.type} key={Math.random()} />
+                            return <BuildControl label={item.label} type={item.type}
+                                key={Math.random()} added={() => props.ingredientAdded(item.type)}
+                                removed={() => props.ingredientRemoved(item.type)} />
                         })
                     }
 
                 </CardBody>
-                <CardFooter>Price BDT</CardFooter>
+                <CardFooter>Price: <strong>{props.price}</strong> BDT</CardFooter>
             </Card>
         </div>
     )
