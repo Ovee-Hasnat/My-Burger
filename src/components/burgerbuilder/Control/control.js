@@ -36,6 +36,7 @@ const Controls = props => {
 
                 </CardBody>
                 <CardFooter>Price: <strong>{props.price}</strong> BDT</CardFooter>
+                <Button color="warning" onClick={props.toggleModal} disabled={!props.purchasable}>Order Now</Button>
             </Card>
         </div>
     )

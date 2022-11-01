@@ -13,8 +13,15 @@
     color: white !important;
     font-size: 25px !important;
     margin-top: -25px !important;
+    margin-left: 10px;
 }
 
 .Navlink:hover {
+    color: wheat !important;
+    text-decoration: none !important;
+}
+
+.active {
+    text-shadow: 1px 1px grey !important;
     color: wheat !important;
 }

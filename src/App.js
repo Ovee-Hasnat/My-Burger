@@ -1,13 +1,19 @@
 import React from 'react';
 import Main from './components/main';
 import './App.css';
-
+import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux';
+import { Store } from './redux/store';
 
 function App() {
   return (
-    <div className='App'>
-      <Main />
-    </div>
+    <Provider store={Store} >
+      <div className='App'>
+        <BrowserRouter>
+          <Main />
+        </BrowserRouter>
+      </div>
+    </Provider>
   );
 }
 

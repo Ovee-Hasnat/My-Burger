@@ -1,57 +1,84 @@
 import React, { Component } from "react";
 import Burger from "./burger/burger";
 import Controls from "./Control/control"
+import { Modal, ModalBody, ModalHeader, ModalFooter, Button } from "reactstrap";
+import Summary from "./Summary/summary";
+import { Navigate, useNavigate, Link } from "react-router-dom";
+import { connect } from 'react-redux';
+import { addIngredient, removeIngredient, updatePurchasable } from '../../redux/actionCreators'
 
-const Ingredients_price = {
-    salad: 20,
-    cheese: 40,
-    meat: 90,
+const mapStateToProps = state => {
+    return {
+        ingredient: state.ingredient,
+        totalPrice: state.totalPrice,
+        purchasable: state.purchasable,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addIngredient: (igtype => dispatch(addIngredient(igtype))),
+        removeIngredient: (igtype => dispatch(removeIngredient(igtype))),
+        updatePurchasable: () => dispatch(updatePurchasable()),
+    }
 }
 
 class BurgerBuilder extends Component {
+
     state = {
-        ingredient: [
-            { type: 'salad', amount: 0 },
-            { type: 'cheese', amount: 0 },
-            { type: 'meat', amount: 0 },
-        ],
-        totalPrice: 80
+        modalOpen: false,
     }
 
     addIngredientHandle = type => {
-        const ingredient = [...this.state.ingredient]
-        const newPrice = this.state.totalPrice + Ingredients_price[type];
-        for (let item of ingredient) {
-            if (item.type === type) item.amount++;
-        }
-        this.setState({ ingredient: ingredient, totalPrice: newPrice });
+        this.props.addIngredient(type);
+        this.props.updatePurchasable();
     }
 
     removeIngredientHandle = type => {
-        const ingredient = [...this.state.ingredient]
-        const newPrice = this.state.totalPrice - Ingredients_price[type];
-        for (let item of ingredient) {
-            if (item.type === type) {
-                if (item.amount <= 0) return;
-                item.amount--;
-            }
-        }
-        this.setState({ ingredient: ingredient, totalPrice: newPrice });
+        this.props.removeIngredient(type);
+        this.props.updatePurchasable();
     }
 
+    toggleModal = () => {
+        this.setState({
+            modalOpen: !this.state.modalOpen
+        })
+    }
+
+    handleCheckout = () => {
+        return <Navigate to={"/checkout"} replace={true} />;
+
+
+    }
 
     render() {
         return (
-            <div className="d-flex flex-md-row flex-column" >
-                <Burger ingredients={this.state.ingredient} />
-                <Controls
-                    ingredientAdded={this.addIngredientHandle}
-                    ingredientRemoved={this.removeIngredientHandle}
-                    price={this.state.totalPrice}
-                />
+            <div>
+                <Modal isOpen={this.state.modalOpen}>
+                    <ModalHeader>Your Order Summary</ModalHeader>
+                    <ModalBody>
+                        <h5>Total Price: {this.props.totalPrice.toFixed(0)} BDT</h5>
+                        <Summary ingredients={this.props.ingredient} />
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="success" onClick={this.handleCheckout}>
+                            Continue to checkout</Button>
+                        <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
+                <div className="d-flex flex-md-row flex-column" >
+                    <Burger ingredients={this.props.ingredient} />
+                    <Controls
+                        ingredientAdded={this.addIngredientHandle}
+                        ingredientRemoved={this.removeIngredientHandle}
+                        price={this.props.totalPrice}
+                        toggleModal={this.toggleModal}
+                        purchasable={this.props.purchasable}
+                    />
+                </div>
             </div>
         )
     }
 }
 
-export default BurgerBuilder;
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);
